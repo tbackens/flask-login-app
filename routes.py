@@ -15,7 +15,7 @@ def index():
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    if current_user.is_authenticated():
+    if current_user.is_authenticated:
         flash('You are already SignedIn')
         return redirect(url_for('index'))
     form = RegisterForm()
@@ -26,10 +26,14 @@ def signup():
         db.session.commit()
 
         flash('Successfully registered')
-        return redirect(url_for('login'))
+        return redirect(url_for('index'))
 
-    return render_template('register.html')
+    return render_template('signup.html', form=form)
 
+
+@app.route('/login')
+def login():
+    return render_template('login.html')
         
 
 with app.app_context():
