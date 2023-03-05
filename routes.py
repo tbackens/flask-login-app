@@ -13,6 +13,10 @@ from flask_login import current_user, login_user, logout_user, login_required
 def index():
     return render_template('index.html')
 
+@app.route('/<user>')
+def dahsboard(user):
+    return render_template('dashboard.html')
+
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if current_user.is_authenticated:
