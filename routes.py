@@ -5,14 +5,19 @@ from models import User
 from flask_login import current_user, login_user, logout_user, login_required
 
 
-
-
-#- ROUTES -
-
+"""
+- Index Route -
+"""
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return redirect(url_for('login'))
 
+
+"""
+- Dashboard Route -
+User is getting redirected to the dashboard after logged in.
+User can use logout button ad is then redirected to the logout route.
+"""
 @app.route('/dashboard/<user>', methods=['GET', 'POST'])
 @login_required
 def dashboard(user):
@@ -21,6 +26,12 @@ def dashboard(user):
             return redirect(url_for('logout'))
     return render_template('dashboard.html')
 
+
+"""
+- Signup Route -
+User has to fill in data. After submitting, password hash will be created and user
+is stored in database. Then, user is redirected to the login route.
+"""
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if current_user.is_authenticated:
@@ -39,6 +50,11 @@ def signup():
     return render_template('signup.html', form=form)
 
 
+"""
+- Login Route -
+User has to fill in data. After submitting, data ist validated by quering the database. 
+If data is valid, login_user() is called. Then, user is redirected to the dashboard route.
+"""
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -55,6 +71,11 @@ def login():
 
     return render_template('login.html', form=form)
 
+
+"""
+- Logout Route -
+Redirection to login route after logout_user() was called.
+"""
 @app.route('/logout', methods=['GET', 'POST'])
 @login_required
 def logout():
