@@ -3,5 +3,7 @@
 {% block content %}
 <h1>Dashboard</h1>
 <h3>user: {{ current_user.username }}</h3>
-<button>Logout</button>
+<form method="post">
+    <input type="submit" value="logout" name="Logout"/>
+</form>
 {% endblock %}
