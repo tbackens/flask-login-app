@@ -1,9 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Dashboard</h1>
-<h3>user: {{ current_user.username }}</h3>
-<form method="post">
-    <input type="submit" value="logout" name="Logout"/>
-</form>
+<div class="card m-5 bg-secondary" style="border-radius: 1.5rem;">
+    <div class="card-body">
+        <h2 class="card-title text-light text-center">Dashboard</h2>
+        <p class="card-text">Hello {{ current_user.username }} ! <br>
+            You successfully created an account and are currently logged in. <br>
+            <br>
+            Click the button below to logout.
+        </p>
+        <form method="post">
+            <input type="submit" value="logout" name="Logout"/>
+        </form>
+    </div>
+</div>
 {% endblock %}
