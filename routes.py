@@ -13,8 +13,12 @@ from flask_login import current_user, login_user, logout_user, login_required
 def index():
     return render_template('index.html')
 
-@app.route('/dashboard/<user>')
+@app.route('/dashboard/<user>', methods=['GET', 'POST'])
+@login_required
 def dashboard(user):
+    if request.method == 'POST':
+        if request.form.get('Logout') == 'logout':
+            return redirect(url_for('logout'))
     return render_template('dashboard.html')
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -50,6 +54,13 @@ def login():
         return redirect(url_for('dashboard', user=user))
 
     return render_template('login.html', form=form)
+
+@app.route('/logout', methods=['GET', 'POST'])
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
+
         
 
 with app.app_context():
