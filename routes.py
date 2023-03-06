@@ -13,8 +13,8 @@ from flask_login import current_user, login_user, logout_user, login_required
 def index():
     return render_template('index.html')
 
-@app.route('/<user>')
-def dahsboard(user):
+@app.route('/dashboard/<user>')
+def dashboard(user):
     return render_template('dashboard.html')
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -30,7 +30,7 @@ def signup():
         db.session.commit()
 
         flash('Successfully registered')
-        return redirect(url_for('index'))
+        return redirect(url_for('login'))
 
     return render_template('signup.html', form=form)
 
@@ -39,7 +39,7 @@ def signup():
 def login():
     if current_user.is_authenticated:
         flash('You are already LoggedIn')
-        return redirect(url_for('index'))
+        return redirect(url_for('dashboard', user=current_user.name))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
@@ -47,7 +47,7 @@ def login():
             flash('Invalid username or password')
             return redirect(url_for('login'))
         login_user(user)
-        return redirect(url_for('index'))
+        return redirect(url_for('dashboard', user=user))
 
     return render_template('login.html', form=form)
         
