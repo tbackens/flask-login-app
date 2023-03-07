@@ -67,7 +67,7 @@ def login():
             flash('Invalid username or password')
             return redirect(url_for('login'))
         login_user(user)
-        return redirect(url_for('dashboard', user=user))
+        return redirect(url_for('dashboard', user=current_user.username))
 
     return render_template('login.html', form=form)
 
